@@ -12,14 +12,156 @@
     <script src="pizza-cart-api.js"></script>
 
     <style>
-        .cart{
-            border: 1px solid;
+        body {
+            font-family: arial, sans-serif;
+        }
 
-            background-color: springgreen;
+        .pizzap {
+            /* border: 3px solid gold; */
             padding: 1em;
             margin: 1em;
+            border-radius: 0.5em;
+            background-color: maroon;
+        }
+
+
+        body {
+            background-color: lightgoldenrodyellow;
+        }
+
+        @media (min-width: 600px) {
+            body {
+                background-color: lightcoral;
+            }
+        }
+
+        @media (min-width: 960px) {
+            body {
+                background-color: lightsalmon;
+            }
+        }
+
+        /* Adding the class */
+        .box {
+            /* background-color:lightseagreen; */
+            border: 1em solid;
+            width: 10%;
+            padding: 2em 1em 2em 0em;
+        }
+
+        .box1 {
+            background-color: lightseagreen;
+            border: 1px solid lightblue;
+            width: 10px;
+            padding: 2em 1em 2em 0em;
+        }
+
+        .header {
+            padding: 1em;
+            background-color: orange;
+            display: flex;
+            border-radius: 0.5em;
+        }
+
+        .input {
+            margin: 1em;
+        }
+
+        .link {
+            background-color: blue;
             width: 15em;
-            
+            margin: 1em;
+            padding: 1em;
+            border-radius: 0.5em;
+            /* text-align: center; */
+        }
+
+
+        .cart-box {
+            display: flex;
+            justify-content: flex-end;
+
+        }
+
+        .cart {
+            background-color: red;
+            /* margin: 0.5em; */
+            padding: 1em;
+            /* margin-top: -10em; */
+            border-radius: 0.5em;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        td {
+            text-align: center;
+            vertical-align: bottom;
+            /* height: 50px; */
+        }
+
+        th,
+        td {
+            padding: 15px;
+            text-align: left;
+            border: 1px solid #ccc;
+
+        }
+
+        .f1 {
+            flex: 1
+        }
+
+        .f3 {
+            flex: 3;
+        }
+
+        .message {
+            padding: 1em;
+            /* color: gold; */
+            font-weight: bold;
+            background-color: gold;
+        }
+
+        .input {
+            padding: 1em;
+        }
+
+
+
+        .buy {
+            width: 7em;
+            margin-bottom: 1em;
+        }
+
+        @media (min-width: 1024px) {
+            .pizzacharts {
+                display: flex;
+            }
+
+            .cart {
+                width: 50%
+            }
+
+        }
+
+        .containers {
+            background-color: white;
+            flex: 1;
+
+
+
+        }
+
+        .container {
+            display: flex;
+            background-color: lightsalmon;
+        }
+
+        .box {
+            background-color: blue;
         }
     </style>
 
@@ -29,69 +171,119 @@
 </head>
 
 <body>
+
+
+
+
     <div x-data="pizzaCartWithAPIWidget">
 
         <div x-text="message"> </div>
         <div x-text="cartId"> </div>
 
-        <h2>Pizzas you can order</h2>
 
-        <div>
-            who is buying the Pizzas: <input type="text" x-model="username">
-        </div>
+
 
         <strong x-text="pizzas.length"></strong>
-
-
         <div>
 
             <div>
-                Cart total: <strong x-text="cart.total"></strong>
+                Cart total: <strong x-text="cart.total.toFixed(2)"></strong>
             </div>
 
             <div class="cart">
                 <table>
 
+
                     <tr>
                         <th>Flavour</th>
                         <th>Qty</th>
+                        <th>Add/Cancel order</th>
                         <th>Total</th>
                     </tr>
+
 
                     <template x-for="pizza in cart.pizzas">
 
                         <tr>
                             <td x-text="pizza.flavour"></td>
                             <td x-text="pizza.qty"></td>
+                            <td><button x-on:click="add(pizza)"> +
+                                </button>
+                                <button x-on:click="remove(pizza)"> -</button>
+                            </td>
                             <td x-text="pizza.total"></td>
                         </tr>
 
                     </template>
+
+                    <tr>
+                        <td colspan="3">
+                            <div x-show="payNow">
+                                <div class="message" x-text="paymentMessage"></div>
+                                <div>
+                                    <label for="input">Payment Amount</label>
+                                    <input class="input" type="number" placeholder="Payment Amount"
+                                        x-model="paymentAmount" width=" 50">
+                                    <button x-on:click="pay" class="btn">
+                                        <img src="delivery.gif" width="20" alt="">
+                                        Pay Now</button>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <button x-show="!payNow" x-on:click="payNow =true" x-show class="btn">
+                                <img src="delivery.gif" width="20" alt="">
+                                Pay</button>
+                        </td>
+                    </tr>
                 </table>
+
+
             </div>
 
 
         </div>
+        <br>
+        <div class="container">
+            <template x-for="pizza in cart.pizzas">
+                <div class="containers box">
 
-
-        <table>
-            <template x-for="pizza in pizzas">
-                <tr>
-                    <td>
+                    <div>
                         <img x-bind:src="pizzaImage(pizza)" height="30" alt="">
-                    </td>
-                    <td x-text="pizza.flavour"></td>
-                    <td x-text="pizza.size"></td>
-                    <td x-text="pizza.price"></td>
-                    <td>
+                    </div>
+                    <div x-text="pizza.flavour">
+                    </div>
+                    <div x-text="pizza.size"></div>
+                    <div x-text="pizza.price"></div>
+                    <div>
                         <button x-on:click="add(pizza)">Buy</button>
-                    </td>
-                </tr>
-            </template>
-        </table>
+                    </div>
+                </div>
+        </div>
+        </template>
 
+        <br>
+
+        <div class="pz">
+            <table>
+                <template x-for="pizza in pizzas">
+                    <tr>
+                        <td>
+                            <img x-bind:src="pizzaImage(pizza)" height="30" alt="">
+                        </td>
+                        <td x-text="pizza.flavour"></td>
+                        <td x-text="pizza.size"></td>
+                        <td x-text="pizza.price"></td>
+                        <td>
+                            <button x-on:click="add(pizza)">Buy</button>
+                        </td>
+                    </tr>
+                </template>
+            </table>
+        </div>
 
     </div>
+
 </body>
 
 </html>
