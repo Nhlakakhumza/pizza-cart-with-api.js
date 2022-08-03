@@ -108,12 +108,12 @@ document.addEventListener('alpine:init', () => {
                           this.message= this.username  +" Paid!"
                           setTimeout(() => {
                               this.cart.total = ''
-                          }, 5000);
+                          }, 3000);
                       }else{
                           this.paymentMessage = 'Sorry - that is not enough money!'
                           setTimeout(() => {
                               this.cart.total = ''
-                          }, 5000);
+                          }, 3000);
                       }
                   })
                   .catch(err=>alert(err));

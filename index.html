@@ -16,23 +16,8 @@
             font-family: arial, sans-serif;
         }
 
-        .pizzap {
-            /* border: 3px solid gold; */
-            padding: 1em;
-            margin: 1em;
-            border-radius: 0.5em;
-            background-color: maroon;
-        }
-
-
         body {
             background-color: lightgoldenrodyellow;
-        }
-
-        @media (min-width: 600px) {
-            body {
-                background-color: lightcoral;
-            }
         }
 
         @media (min-width: 960px) {
@@ -41,46 +26,8 @@
             }
         }
 
-        /* Adding the class */
-        .box {
-            /* background-color:lightseagreen; */
-            border: 1em solid;
-            width: 10%;
-            padding: 2em 1em 2em 0em;
-        }
-
-        .box1 {
-            background-color: lightseagreen;
-            border: 1px solid lightblue;
-            width: 10px;
-            padding: 2em 1em 2em 0em;
-        }
-
-        .header {
-            padding: 1em;
-            background-color: orange;
-            display: flex;
-            border-radius: 0.5em;
-        }
-
         .input {
             margin: 1em;
-        }
-
-        .link {
-            background-color: blue;
-            width: 15em;
-            margin: 1em;
-            padding: 1em;
-            border-radius: 0.5em;
-            /* text-align: center; */
-        }
-
-
-        .cart-box {
-            display: flex;
-            justify-content: flex-end;
-
         }
 
         .cart {
@@ -89,6 +36,9 @@
             padding: 1em;
             /* margin-top: -10em; */
             border-radius: 0.5em;
+            width: 50%
+            
+
         }
 
         table {
@@ -110,19 +60,12 @@
 
         }
 
-        .f1 {
-            flex: 1
-        }
-
-        .f3 {
-            flex: 3;
-        }
-
         .message {
             padding: 1em;
             /* color: gold; */
             font-weight: bold;
             background-color: gold;
+
         }
 
         .input {
@@ -136,32 +79,21 @@
             margin-bottom: 1em;
         }
 
-        @media (min-width: 1024px) {
-            .pizzacharts {
-                display: flex;
-            }
 
-            .cart {
-                width: 50%
-            }
-
-        }
-
-        .containers {
-            background-color: white;
-            flex: 1;
-
-
-
-        }
 
         .container {
-            display: flex;
             background-color: lightsalmon;
+            display: flex;
+
         }
 
-        .box {
-            background-color: blue;
+        .containersb {
+            background-color: goldenrod;
+            flex: 1;
+        }
+
+        .pz {
+            background-color: blueviolet;
         }
     </style>
 
@@ -187,7 +119,7 @@
         <div>
 
             <div>
-                Cart total: <strong x-text="cart.total.toFixed(2)"></strong>
+                Cart total: <strong x-text="cartTotal().toFixed(2)"></strong>
             </div>
 
             <div class="cart">
@@ -246,7 +178,7 @@
         <br>
         <div class="container">
             <template x-for="pizza in cart.pizzas">
-                <div class="containers box">
+                <div class="containersb">
 
                     <div>
                         <img x-bind:src="pizzaImage(pizza)" height="30" alt="">
